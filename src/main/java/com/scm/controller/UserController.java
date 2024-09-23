@@ -7,8 +7,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.Map;
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -31,6 +35,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import com.razorpay.Order;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
 import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.helper.Message;
@@ -395,5 +402,23 @@ public class UserController {
 	{
 		model.addAttribute("title", "Profile Page");
 		return "normal/profile";
+	}
+	//creating order for payment
+	@PostMapping("/create_order")
+	@ResponseBody
+	public String createOrder(@RequestBody Map<String,Object> data) throws RazorpayException
+	{
+		System.out.println("Hey order function executed"+data);
+		
+		int amt = Integer.parseInt(data.get("amount").toString());
+		var client = new RazorpayClient("rzp_test_aPLWoiumf2sP6J", "g2Nja1QBJDD3ftdS4gqjsIf6");
+		JSONObject options = new JSONObject();
+		options.put("amount", amt*100);
+		options.put("currency", "INR");
+		options.put("receipt", "txn_123456");
+		Order order = client.orders.create(options);
+
+		System.out.println(order);
+		return order.toString();
 	}
 }

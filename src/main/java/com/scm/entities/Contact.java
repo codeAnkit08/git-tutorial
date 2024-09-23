@@ -18,7 +18,7 @@ import jakarta.validation.constraints.Size;
 public class Contact {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cid;
 
 	@NotBlank(message = "Name field is required !!")
