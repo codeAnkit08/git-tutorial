@@ -411,7 +411,7 @@ public class UserController {
 		System.out.println("Hey order function executed"+data);
 		
 		int amt = Integer.parseInt(data.get("amount").toString());
-		var client = new RazorpayClient("rzp_test_aPLWoiumf2sP6J", "g2Nja1QBJDD3ftdS4gqjsIf6");
+		var client = new RazorpayClient("your key_id", "your key_secret");
 		JSONObject options = new JSONObject();
 		options.put("amount", amt*100);
 		options.put("currency", "INR");
