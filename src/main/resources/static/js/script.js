@@ -87,7 +87,7 @@ const paymentStart=()=>{
 						currency:"INR",
 						name:"Smart Contact Manager",
 						description: "Donation",
-						image: "https://learncodewithdurgesh.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flcwd_logo.45da3818.png&w=640&q=75",
+						image: "https://illustoon.com/photo/7817.png",
 						order_id:response.id,
 						handler:function(response){
 							console.log(response.razorpay_payment_id);
